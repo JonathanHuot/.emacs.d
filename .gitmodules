@@ -1,0 +1,3 @@
+[submodule "vendor/flymake-python"]
+	path = vendor/flymake-python
+	url = https://github.com/JonathanHuot/flymake-python.git
