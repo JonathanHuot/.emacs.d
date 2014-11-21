@@ -12,6 +12,20 @@
 (setq mouse-wheel-progressive-speed nil)
 (mwheel-install)
 
+
+;;; This was installed by package-install.el.
+;;; This provides support for the package system and
+;;; interfacing with ELPA, the package archive.
+;;; Move this code earlier if you want to reference
+;;; packages in your .emacs.
+(when
+    (load
+     (expand-file-name "~/.emacs.d/elpa/package.el"))
+  (package-initialize))
+(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
+                         ("marmalade" . "https://marmalade-repo.org/packages/")
+                         ("melpa" . "http://melpa.milkbox.net/packages/")))
+
 ;; varnish style
 (defun des-knf ()
   (interactive)
@@ -206,3 +220,5 @@
     (insert "import pdb; pdb.set_trace();\n"))  
 
 (global-set-key [(f9)] 'add-py-debug)
+
+
