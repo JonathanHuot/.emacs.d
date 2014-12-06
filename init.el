@@ -18,13 +18,16 @@
 ;;; interfacing with ELPA, the package archive.
 ;;; Move this code earlier if you want to reference
 ;;; packages in your .emacs.
-(when
-    (load
-     (expand-file-name "~/.emacs.d/elpa/package.el"))
-  (package-initialize))
-(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-                         ("marmalade" . "https://marmalade-repo.org/packages/")
-                         ("melpa" . "http://melpa.milkbox.net/packages/")))
+(when (>= emacs-major-version 24)
+  (require 'package)
+  (package-initialize)
+  (expand-file-name "~/.emacs.d/elpa/package.el")
+  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/") t)
+  (add-to-list 'package-archives '("marmalade" . "https://marmalade-repo.org/packages/") t)
+  (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+  )
+
+;; 
 
 ;; varnish style
 (defun des-knf ()
@@ -98,6 +101,9 @@
 (add-to-list 'auto-mode-alist '("\\.vcl\\'" . vcl-mode))
 (add-to-list 'auto-mode-alist '("\\.vtc\\'" . vcl-mode))
 (add-to-list 'auto-mode-alist '("\\.vcl.tmpl\\'" . vcl-mode))
+
+(require 'flymake-php)
+  (add-hook 'php-mode-hook 'flymake-php-load)
 
 ;; 
 (autoload 'completion-ignored-build-mode
@@ -210,6 +216,9 @@
 
 (require 'auto-complete)
 (global-auto-complete-mode t)
+
+(require 'auto-complete-c-headers)
+(add-to-list 'ac-sources 'ac-source-c-headers)
 
 
 ;; debug python:
