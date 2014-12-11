@@ -65,7 +65,6 @@
  (setq auto-mode-alist
  (cons '("\\.vcl$" . c-mode)
  auto-mode-alist))
-(add-to-list 'load-path "~/.emacs.d")
 
 ;; flymake-python (github/akaihola! not rpatterson cuz outdated)
 (add-to-list 'load-path "~/.emacs.d/vendor/flymake-python")
