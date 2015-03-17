@@ -105,6 +105,7 @@
   (add-hook 'php-mode-hook 'flymake-php-load)
 
 ;; 
+(add-to-list 'load-path "~/.emacs.d/vendor/")
 (autoload 'completion-ignored-build-mode
   "completion-ignored-build" nil t)
 (autoload 'completion-ignored-build-enable-setup
