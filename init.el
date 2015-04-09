@@ -13,6 +13,14 @@
 (mwheel-install)
 
 
+ ;; "ctrl - left click" buffer menu: increase number of items shown
+;; set max length of this list. default 20. see next.
+(setq mouse-buffer-menu-maxlen 40)
+;; set # buffer in a mode before grouping begins. takes precedence over previous
+;; set to 1 to always group by mode. default 4
+(setq mouse-buffer-menu-mode-mult 20)
+
+
 ;;; This was installed by package-install.el.
 ;;; This provides support for the package system and
 ;;; interfacing with ELPA, the package archive.
@@ -24,7 +32,7 @@
   (expand-file-name "~/.emacs.d/elpa/package.el")
   (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/") t)
   (add-to-list 'package-archives '("marmalade" . "https://marmalade-repo.org/packages/") t)
-  (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+  (add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t)
   )
 
 ;; 
@@ -105,7 +113,7 @@
   (add-hook 'php-mode-hook 'flymake-php-load)
 
 ;; 
-(add-to-list 'load-path "~/.emacs.d/vendor/")
+(add-to-list 'load-path "~/.emacs.d/lisp")
 (autoload 'completion-ignored-build-mode
   "completion-ignored-build" nil t)
 (autoload 'completion-ignored-build-enable-setup
@@ -231,3 +239,22 @@
 (global-set-key [(f9)] 'add-py-debug)
 
 
+;; alternative to C-x C-w
+(defun rename-current-buffer-file ()
+  "Renames current buffer and file it is visiting."
+  (interactive)
+  (let ((name (buffer-name))
+        (filename (buffer-file-name)))
+    (if (not (and filename (file-exists-p filename)))
+        (error "Buffer '%s' is not visiting a file!" name)
+      (let ((new-name (read-file-name "New name: " filename)))
+        (if (get-buffer new-name)
+            (error "A buffer named '%s' already exists!" new-name)
+          (rename-file filename new-name 1)
+          (rename-buffer new-name)
+          (set-visited-file-name new-name)
+          (set-buffer-modified-p nil)
+          (message "File '%s' successfully renamed to '%s'"
+                   name (file-name-nondirectory new-name)))))))
+
+(global-set-key (kbd "C-x C-r") 'rename-current-buffer-file)
