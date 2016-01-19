@@ -104,6 +104,7 @@
 
 ;; Local variables
 ;;;###autoload
+(defalias 'set-difference 'cl-set-difference)
 (defgroup php nil
   "Major mode `php-mode' for editing PHP code."
   :prefix "php-"
