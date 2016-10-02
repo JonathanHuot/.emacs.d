@@ -3,3 +3,9 @@
 
 # Packaging
 .cask
+
+elpa/archives
+auto-save-list
+ac-comphist.dat
+*~
+network-security.data
