@@ -74,25 +74,6 @@
  (cons '("\\.vcl$" . c-mode)
  auto-mode-alist))
 
-;; flymake-python (github/akaihola! not rpatterson cuz outdated)
-(add-to-list 'load-path "~/.emacs.d/vendor/flymake-python")
-(when (load "flymake" t)
-  (defun flymake-pylint-init (&optional trigger-type)
-    (let* ((temp-file (flymake-init-create-temp-buffer-copy
-                       'flymake-create-temp-with-folder-structure))
-	   (local-file (file-relative-name
-			temp-file
-			(file-name-directory buffer-file-name)))
-	   (options (when trigger-type (list "--trigger-type" trigger-type))))
-      (list "~/.emacs.d/vendor/flymake-python/pyflymake.py" (append options (list local-file)))))
-
-  (add-to-list 'flymake-allowed-file-name-masks
-	       '("\\.py\\'" flymake-pylint-init)))
-
-(setq flymake-gui-warnings-enabled nil)
-(add-hook 'find-file-hook 'flymake-find-file-hook)
-
-
 (load "php-mode")
 (load "cmake-mode")
 (load "vcl-mode")
@@ -249,6 +230,20 @@
           (message "File '%s' successfully renamed to '%s'"
                    name (file-name-nondirectory new-name)))))))
 
+
+;; elpa
+(elpy-enable)
+(defvar myPackages
+  '(better-defaults
+    elpy
+    flycheck ;; add the flycheck package
+    material-theme))
+
+(when (require 'flycheck nil t)
+  (setq elpy-modules (delq 'elpy-module-flymake elpy-modules))
+  (add-hook 'elpy-mode-hook 'flycheck-mode))
+
+
 (global-set-key (kbd "C-x C-r") 'rename-current-buffer-file)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -257,4 +252,4 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (dockerfile-mode markdown-mode org js2-mode yaml-mode vcl-mode puppet-mode php-mode magit haml-mode groovy-mode flymake-php color-theme cmake-mode auto-complete-c-headers))))
+    (elpy jedi dockerfile-mode markdown-mode org js2-mode yaml-mode vcl-mode puppet-mode php-mode magit haml-mode groovy-mode flymake-php color-theme cmake-mode auto-complete-c-headers))))
