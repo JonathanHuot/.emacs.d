@@ -144,6 +144,7 @@
 (setq require-final-newline t)
 ; always use spaces, not tabs, when indenting
 (setq indent-tabs-mode nil)
+(setq-default indent-tabs-mode nil)
 
 ; display line numbers to the right of the window
 (global-linum-mode t)
