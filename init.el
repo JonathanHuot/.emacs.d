@@ -1,3 +1,7 @@
+(require 'server)
+(unless (server-running-p)
+  (server-start))
+
 ;; mine :
 ;; keybinding
 (global-set-key [(meta g)] 'goto-line)
@@ -77,6 +81,14 @@
 (load "php-mode")
 (load "cmake-mode")
 (load "vcl-mode")
+;;(load "ecmascript-mode")
+
+
+;; PO i18n mode
+(autoload 'po-mode "po-mode"
+  "Major mode for translators to edit PO files" t)
+(setq auto-mode-alist (cons '("\\.po\\'\\|\\.po\\." . po-mode)
+                            auto-mode-alist))
 
 (add-to-list 'auto-mode-alist
              '("\\.php[34]?\\'\\|\\.phtml\\'" . php-mode))
@@ -255,4 +267,5 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (elpy jedi dockerfile-mode markdown-mode org js2-mode yaml-mode vcl-mode puppet-mode php-mode magit haml-mode groovy-mode flymake-php color-theme cmake-mode auto-complete-c-headers))))
+    (mmm-mode sass-mode vue-mode emmet-mode elpy jedi dockerfile-mode markdown-mode org js2-mode yaml-mode vcl-mode puppet-mode php-mode magit haml-mode groovy-mode flymake-php color-theme cmake-mode auto-complete-c-headers)))
+ '(send-mail-function (quote smtpmail-send-it)))
